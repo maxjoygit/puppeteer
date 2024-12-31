@@ -1,0 +1,24 @@
+name: Puppeter
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      BUDDY_EMAIL: ${{ secrets.BUDDY_EMAIL }}
+      BUDDY_PASSWORD: ${{ secrets.BUDDY_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm i
+      - name: Login
+        run: node src/app.js
